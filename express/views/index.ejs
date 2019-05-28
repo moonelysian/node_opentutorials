@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>INDEX</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container" style="padding-top:3em;">
+      <form action="/create" method="POST">
+          <div class="col-auto my-1">
+            <label>Enter Todo Items</label>
+            <input type="text" class="form-control" name="item" placeholder="Enter something todo" value="">
+          </div>
+          
+          <div class="col-auto my-1" style="text-align: right;">
+              <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+
+        <div>
+          <ul>
+           <% for(var i=0; i<todoList.length; i++){ %>
+              <li> <%= todoList[i] %> </li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+  </body>
+</html>
