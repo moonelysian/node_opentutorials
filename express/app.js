@@ -10,8 +10,6 @@ app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 // app.use(express.static('public'));
 
-var todoList=[];
-
 // routes
 app.get('/',function(req,res){
    connection.query(`SELECT * FROM todos`, function(err, todo){
@@ -31,6 +29,25 @@ app.post('/create', function(req, res){
     });
 });
 
+app.get('/show/:id', function(req,res){
+    var id = req.params.id;
+    connection.query(`SELECT * FROM todos WHERE id=?`, id, function(err, todo){
+        res.render('show.ejs', {todo: todo});
+    });
+});
+
+app.post('/update/:id' , function(req, res){
+    var id = req.params.id;
+    var item = req.body.item;
+    connection.query(`UPDATE todos SET content="${item}" WHERE id=?`, id, function(err){
+        try{
+            res.redirect('/');
+        }catch(err){
+            throw err;
+        }
+    });
+});
+
 app.post('/delete/:id', function(req, res){
     var id = req.params.id;
     connection.query(`DELETE FROM todos WHERE id=?`, id, function(err){
@@ -39,11 +56,11 @@ app.post('/delete/:id', function(req, res){
         }catch(err){
             throw err;
         }
-    })
+    });
 });
 
 app.get('*', function(req,res){
-    res.send(`<h1>Invalid Page</h1>`)
+    res.send(`<h1>Invalid Page</h1>`);
 });
 
 app.listen(3000, function(){
